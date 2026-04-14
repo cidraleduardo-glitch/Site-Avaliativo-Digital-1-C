@@ -1,31 +1,36 @@
-/* --- VARIÁVEIS E DESIGN SYSTEM --- */
+/* --- VARIÁVEIS E TOKENS DE DESIGN --- */
 :root {
-    --primary: #6366f1;
-    --bg: #ffffff;
-    --text: #1f2937;
-    --surface: #f3f4f6;
+    --primary: #6b2d91; /* Roxo Joestar */
+    --secondary: #d4af37; /* Dourado */
+    --bg-color: #0f0f0f;
+    --text-color: #ffffff;
+    --surface: #1e1e1e;
     --radius: 12px;
-    --spacing: 2rem;
-    --transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    font-size: 16px;
+    --gap: 1.5rem;
+    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --font-size-base: 16px;
 }
 
 /* --- MODO ALTO CONTRASTE --- */
 body.high-contrast {
     --primary: #ffff00;
-    --bg: #000000;
-    --text: #ffffff;
-    --surface: #333333;
+    --secondary: #ffffff;
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --surface: #000000;
+    border: 2px solid #fff;
 }
 
+/* --- RESET & BASE --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     font-family: 'Segoe UI', system-ui, sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
-    transition: background 0.3s, color 0.3s;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: var(--font-size-base);
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 /* --- LAYOUT (GRID & FLEX) --- */
@@ -33,59 +38,78 @@ header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem var(--spacing);
-    background: var(--surface);
+    padding: 1rem 5%;
+    background: rgba(0,0,0,0.8);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.hero {
-    padding: 4rem var(--spacing);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
+.grid-layout {
+    display: grid;
+    gap: var(--gap);
+    padding: 2rem 5%;
+    /* Altere aqui o número de colunas para Desktop */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-/* Edite aqui o Grid dos Cards */
-.carousel-track {
-    display: flex;
-    gap: 1.5rem;
-    overflow: hidden;
-    padding: 1rem;
-}
+section { padding: 4rem 5%; }
 
+/* --- COMPONENTES --- */
 .card {
-    flex: 0 0 280px; /* Base mobile */
     background: var(--surface);
     padding: 1.5rem;
     border-radius: var(--radius);
+    border-bottom: 4px solid var(--primary);
+    transition: var(--transition);
 }
 
-/* --- ACESSIBILIDADE E ANIMAÇÕES --- */
+.card:hover { transform: translateY(-10px); }
+
+/* Acordeão D4C */
+.accordion-item {
+    background: var(--surface);
+    margin-bottom: 0.5rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.accordion-content {
+    max-height: 0;
+    padding: 0 1rem;
+    transition: var(--transition);
+    background: var(--surface);
+}
+
+.accordion-content.active {
+    max-height: 200px;
+    padding: 1rem;
+}
+
+/* Carrossel */
+.carousel { position: relative; overflow: hidden; width: 100%; }
+.carousel-track { display: flex; transition: transform 0.5s ease-in-out; }
+.carousel-item { min-width: 100%; padding: 2rem; text-align: center; }
+
+/* --- ANIMAÇÕES (SCROLL REVEAL) --- */
 .reveal {
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.8s ease-out;
 }
 
-.reveal.active {
+.reveal.visible {
     opacity: 1;
     transform: translateY(0);
-}
-
-.faq-item { border-bottom: 1px solid var(--primary); }
-.faq-trigger {
-    width: 100%;
-    padding: 1rem;
-    text-align: left;
-    background: none;
-    border: none;
-    color: var(--text);
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* --- RESPONSIVIDADE --- */
-@media (min-width: 768px) {
-    .card { flex: 0 0 calc(33.333% - 1rem); }
 }
