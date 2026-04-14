@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechFlow - Aprenda o Futuro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header role="banner">
+        <nav aria-label="Navegação Principal">
+            <div class="logo">TechFlow</div>
+            <div class="accessibility-controls">
+                <button onclick="changeFontSize('increase')" aria-label="Aumentar Fonte">A+</button>
+                <button onclick="changeFontSize('decrease')" aria-label="Diminuir Fonte">A-</button>
+                <button onclick="toggleContrast()" aria-label="Alternar Alto Contraste">🌓</button>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="hero reveal" aria-labelledby="hero-title">
+            <h1 id="hero-title">Domine as tecnologias que movem o mundo.</h1>
+            <p>Cursos práticos com foco em acessibilidade e performance.</p>
+            <button class="btn-primary">Começar Agora</button>
+        </section>
+
+        <section class="carousel-section reveal" aria-label="Destaques">
+            <h2>Nossos Destaques</h2>
+            <div class="carousel-container">
+                <button class="carousel-prev" aria-label="Slide anterior">❮</button>
+                <div id="carousel-track" class="carousel-track" role="region" aria-live="polite">
+                    </div>
+                <button class="carousel-next" aria-label="Próximo slide">❯</button>
+            </div>
+        </section>
+
+        <section class="faq-section reveal" aria-labelledby="faq-title">
+            <h2 id="faq-title">Dúvidas Frequentes</h2>
+            <div id="faq-container">
+                </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2024 TechFlow. Desenvolvido com foco em acessibilidade.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
