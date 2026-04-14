@@ -1,58 +1,217 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JoJo Universe | D4C</title>
-    <link rel="stylesheet" href="style.css">
+    <title>JoJo Universe | D4C Edition</title>
+    <style>
+        /* --- DESIGN SYSTEM --- */
+        :root {
+            --primary: #6b2d91;
+            --accent: #d4af37;
+            --bg: #0f0f0f;
+            --surface: #1e1e1e;
+            --text: #ffffff;
+            --radius: 12px;
+            --font-size: 16px;
+        }
+
+        .high-contrast {
+            --primary: #ffff00;
+            --accent: #ffffff;
+            --bg: #000000;
+            --surface: #000000;
+            --text: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-size: var(--font-size);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: var(--surface);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .accessibility-controls button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+
+        /* --- LAYOUT --- */
+        section { padding: 4rem 5%; max-width: 1200px; margin: auto; }
+        
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border-bottom: 4px solid var(--primary);
+        }
+
+        /* --- D4C SPECIAL SECTION (Accordion) --- */
+        .accordion-item {
+            background: var(--surface);
+            margin-bottom: 10px;
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            padding: 0 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: #252525;
+        }
+
+        .accordion-content.active {
+            max-height: 200px;
+            padding: 15px;
+        }
+
+        /* --- REVEAL ANIMATION --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 0.8s all ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2 { color: var(--accent); margin-bottom: 1rem; }
+    </style>
 </head>
 <body>
+
     <header>
-        <nav aria-label="Navegação Principal">
-            <div class="logo">JOJO<span>D4C</span></div>
-            <div class="accessibility-bar">
-                <button onclick="changeFontSize('increase')" title="Aumentar Fonte">A+</button>
-                <button onclick="changeFontSize('decrease')" title="Diminuir Fonte">A-</button>
-                <button onclick="toggleContrast()" title="Alto Contraste">◐</button>
-            </div>
-        </nav>
+        <div class="logo"><strong>JOJO</strong> D4C</div>
+        <div class="accessibility-controls">
+            <button onclick="changeFont(2)">A+</button>
+            <button onclick="changeFont(-2)">A-</button>
+            <button onclick="toggleContrast()">◐ Contrast</button>
+        </div>
     </header>
 
     <main>
         <section id="hero" class="reveal">
             <h1>Dirty Deeds Done Dirt Cheap</h1>
-            <p>A travessia dimensional de Steel Ball Run começa aqui.</p>
+            <p>O Stand definitivo de Funny Valentine. Navegue pelas dimensões.</p>
         </section>
 
         <section id="parts" class="reveal">
-            <h2>Arcos da História</h2>
+            <h2>Arcos Principais</h2>
             <div id="parts-grid" class="grid-container">
                 </div>
         </section>
 
-        <section id="d4c-section" class="reveal">
-            <h2>Stand: D4C</h2>
-            <div id="d4c-accordion" class="accordion">
+        <section id="d4c" class="reveal">
+            <h2>Habilidades do D4C</h2>
+            <div id="d4c-accordion">
                 </div>
-        </section>
-
-        <section id="gallery" class="reveal">
-            <h2>Habilidades Multidimensionais</h2>
-            <div class="carousel-container">
-                <div id="carousel-track" class="track">
-                    </div>
-                <div class="carousel-controls">
-                    <button id="prevBtn">Anterior</button>
-                    <button id="nextBtn">Próximo</button>
-                </div>
-            </div>
         </section>
     </main>
 
-    <footer>
-        <p>Desenvolvido com foco em UX e Acessibilidade.</p>
-    </footer>
+    <script>
+        // --- DADOS ---
+        const parts = [
+            { title: "Steel Ball Run", desc: "A nona parte, onde o D4C aparece como o antagonista principal." },
+            { title: "Multiverso", desc: "A capacidade de transitar entre infinitas terras paralelas." },
+            { title: "Funny Valentine", desc: "O 23º Presidente dos EUA e portador do D4C." }
+        ];
 
-    <script src="script.js"></script>
+        const abilities = [
+            { name: "Salto Dimensional", text: "Valentine pode viajar entre mundos paralelos ao ser prensado entre dois objetos." },
+            { name: "D4C: Love Train", text: "Uma barreira de luz dimensional que desvia todo o azar e ataques para outros lugares do mundo." }
+        ];
+
+        // --- RENDERIZAÇÃO ---
+        function render() {
+            const grid = document.getElementById('parts-grid');
+            grid.innerHTML = parts.map(p => `
+                <div class="card">
+                    <h3>${p.title}</h3>
+                    <p>${p.desc}</p>
+                </div>
+            `).join('');
+
+            const acc = document.getElementById('d4c-accordion');
+            acc.innerHTML = abilities.map((a, i) => `
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAcc(${i})">${a.name}</button>
+                    <div id="content-${i}" class="accordion-content">
+                        <p>${a.text}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- FUNÇÕES ---
+        function toggleAcc(id) {
+            document.getElementById(`content-${id}`).classList.toggle('active');
+        }
+
+        function toggleContrast() {
+            document.body.classList.toggle('high-contrast');
+        }
+
+        let currentSize = 16;
+        function changeFont(n) {
+            currentSize += n;
+            document.documentElement.style.setProperty('--font-size', currentSize + 'px');
+        }
+
+        // --- ANIMAÇÃO DE SCROLL ---
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if(e.isIntersecting) e.target.classList.add('visible');
+            });
+        });
+
+        // INICIAR TUDO
+        window.onload = () => {
+            render();
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        };
+    </script>
 </body>
 </html>
