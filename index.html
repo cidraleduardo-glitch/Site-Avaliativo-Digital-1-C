@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JoJo's Universe | D4C Edition</title>
+    <title>JoJo Universe | D4C</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <nav aria-label="Menu Principal">
-            <div class="logo">JOJO<span>UNIVERSE</span></div>
-            <div class="accessibility-controls">
-                <button onclick="changeFontSize('increase')" aria-label="Aumentar fonte">A+</button>
-                <button onclick="changeFontSize('decrease')" aria-label="Diminuir fonte">A-</button>
-                <button onclick="toggleContrast()" aria-label="Alternar Alto Contraste">◐</button>
+        <nav aria-label="Navegação Principal">
+            <div class="logo">JOJO<span>D4C</span></div>
+            <div class="accessibility-bar">
+                <button onclick="changeFontSize('increase')" title="Aumentar Fonte">A+</button>
+                <button onclick="changeFontSize('decrease')" title="Diminuir Fonte">A-</button>
+                <button onclick="toggleContrast()" title="Alto Contraste">◐</button>
             </div>
         </nav>
     </header>
@@ -21,36 +21,36 @@
     <main>
         <section id="hero" class="reveal">
             <h1>Dirty Deeds Done Dirt Cheap</h1>
-            <p>Explore o multiverso com o stand mais icônico de Steel Ball Run.</p>
+            <p>A travessia dimensional de Steel Ball Run começa aqui.</p>
         </section>
 
-        <section id="parts-section" class="reveal">
-            <h2>As Linhagens Joestar</h2>
-            <div id="parts-container" class="grid-layout">
+        <section id="parts" class="reveal">
+            <h2>Arcos da História</h2>
+            <div id="parts-grid" class="grid-container">
                 </div>
         </section>
 
-        <section id="d4c-feature" class="reveal">
-            <h2>D4C: Dirty Deeds Done Dirt Cheap</h2>
-            <div class="accordion-container" id="d4c-accordion">
+        <section id="d4c-section" class="reveal">
+            <h2>Stand: D4C</h2>
+            <div id="d4c-accordion" class="accordion">
                 </div>
         </section>
 
-        <section id="abilities-carousel" class="reveal" aria-label="Galeria de Habilidades">
+        <section id="gallery" class="reveal">
             <h2>Habilidades Multidimensionais</h2>
-            <div class="carousel">
-                <div class="carousel-track" id="carousel-track">
+            <div class="carousel-container">
+                <div id="carousel-track" class="track">
                     </div>
-                <div class="carousel-nav">
-                    <button id="prevBtn" aria-label="Anterior">❮</button>
-                    <button id="nextBtn" aria-label="Próximo">❯</button>
+                <div class="carousel-controls">
+                    <button id="prevBtn">Anterior</button>
+                    <button id="nextBtn">Próximo</button>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer role="contentinfo">
-        <p>&copy; 2024 JoJo Experience - Focado em Acessibilidade.</p>
+    <footer>
+        <p>Desenvolvido com foco em UX e Acessibilidade.</p>
     </footer>
 
     <script src="script.js"></script>
