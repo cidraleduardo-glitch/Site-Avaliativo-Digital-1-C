@@ -3,47 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechFlow - Aprenda o Futuro</title>
+    <title>JoJo's Universe | D4C Edition</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header role="banner">
-        <nav aria-label="Navegação Principal">
-            <div class="logo">TechFlow</div>
+    <header>
+        <nav aria-label="Menu Principal">
+            <div class="logo">JOJO<span>UNIVERSE</span></div>
             <div class="accessibility-controls">
-                <button onclick="changeFontSize('increase')" aria-label="Aumentar Fonte">A+</button>
-                <button onclick="changeFontSize('decrease')" aria-label="Diminuir Fonte">A-</button>
-                <button onclick="toggleContrast()" aria-label="Alternar Alto Contraste">🌓</button>
+                <button onclick="changeFontSize('increase')" aria-label="Aumentar fonte">A+</button>
+                <button onclick="changeFontSize('decrease')" aria-label="Diminuir fonte">A-</button>
+                <button onclick="toggleContrast()" aria-label="Alternar Alto Contraste">◐</button>
             </div>
         </nav>
     </header>
 
-    <main id="main-content">
-        <section class="hero reveal" aria-labelledby="hero-title">
-            <h1 id="hero-title">Domine as tecnologias que movem o mundo.</h1>
-            <p>Cursos práticos com foco em acessibilidade e performance.</p>
-            <button class="btn-primary">Começar Agora</button>
+    <main>
+        <section id="hero" class="reveal">
+            <h1>Dirty Deeds Done Dirt Cheap</h1>
+            <p>Explore o multiverso com o stand mais icônico de Steel Ball Run.</p>
         </section>
 
-        <section class="carousel-section reveal" aria-label="Destaques">
-            <h2>Nossos Destaques</h2>
-            <div class="carousel-container">
-                <button class="carousel-prev" aria-label="Slide anterior">❮</button>
-                <div id="carousel-track" class="carousel-track" role="region" aria-live="polite">
-                    </div>
-                <button class="carousel-next" aria-label="Próximo slide">❯</button>
-            </div>
-        </section>
-
-        <section class="faq-section reveal" aria-labelledby="faq-title">
-            <h2 id="faq-title">Dúvidas Frequentes</h2>
-            <div id="faq-container">
+        <section id="parts-section" class="reveal">
+            <h2>As Linhagens Joestar</h2>
+            <div id="parts-container" class="grid-layout">
                 </div>
+        </section>
+
+        <section id="d4c-feature" class="reveal">
+            <h2>D4C: Dirty Deeds Done Dirt Cheap</h2>
+            <div class="accordion-container" id="d4c-accordion">
+                </div>
+        </section>
+
+        <section id="abilities-carousel" class="reveal" aria-label="Galeria de Habilidades">
+            <h2>Habilidades Multidimensionais</h2>
+            <div class="carousel">
+                <div class="carousel-track" id="carousel-track">
+                    </div>
+                <div class="carousel-nav">
+                    <button id="prevBtn" aria-label="Anterior">❮</button>
+                    <button id="nextBtn" aria-label="Próximo">❯</button>
+                </div>
+            </div>
         </section>
     </main>
 
     <footer role="contentinfo">
-        <p>&copy; 2024 TechFlow. Desenvolvido com foco em acessibilidade.</p>
+        <p>&copy; 2024 JoJo Experience - Focado em Acessibilidade.</p>
     </footer>
 
     <script src="script.js"></script>
