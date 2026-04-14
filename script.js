@@ -1,115 +1,80 @@
-/* --- VARIÁVEIS E TOKENS DE DESIGN --- */
-:root {
-    --primary: #6b2d91; /* Roxo Joestar */
-    --secondary: #d4af37; /* Dourado */
-    --bg-color: #0f0f0f;
-    --text-color: #ffffff;
-    --surface: #1e1e1e;
-    --radius: 12px;
-    --gap: 1.5rem;
-    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    --font-size-base: 16px;
+// --- GESTÃO DE DADOS (DATABASE SIMULADA) ---
+const joJoParts = [
+    { title: "Phantom Blood", desc: "Onde tudo começou. Jonathan vs Dio." },
+    { title: "Battle Tendency", desc: "Joseph Joestar e os Homens do Pilar." },
+    { title: "Stardust Crusaders", desc: "A jornada para o Egito e a introdução dos Stands." },
+    { title: "Steel Ball Run", desc: "A corrida através da América. Onde surge o D4C." }
+];
+
+const d4cDetails = [
+    { title: "O que é?", content: "Stand de Funny Valentine, o 23º Presidente dos EUA." },
+    { title: "Poder Principal", content: "Permite que diferentes dimensões coexistam simultaneamente." },
+    { title: "Love Train", content: "Uma barreira dimensional que redireciona toda a 'má sorte' (dano)." }
+];
+
+// --- RENDERIZAÇÃO DINÂMICA ---
+function renderContent() {
+    const partsContainer = document.getElementById('parts-container');
+    partsContainer.innerHTML = joJoParts.map(part => `
+        <article class="card">
+            <h3>${part.title}</h3>
+            <p>${part.desc}</p>
+        </article>
+    `).join('');
+
+    const accordion = document.getElementById('d4c-accordion');
+    accordion.innerHTML = d4cDetails.map((detail, index) => `
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false" onclick="toggleAccordion(${index})">
+                ${detail.title}
+            </button>
+            <div class="accordion-content" id="content-${index}">
+                <p>${detail.content}</p>
+            </div>
+        </div>
+    `).join('');
 }
 
-/* --- MODO ALTO CONTRASTE --- */
-body.high-contrast {
-    --primary: #ffff00;
-    --secondary: #ffffff;
-    --bg-color: #000000;
-    --text-color: #ffffff;
-    --surface: #000000;
-    border: 2px solid #fff;
+// --- ACESSIBILIDADE: CONTROLE DE FONTE ---
+let currentFontSize = 16;
+function changeFontSize(action) {
+    const root = document.documentElement;
+    currentFontSize = action === 'increase' ? currentFontSize + 2 : currentFontSize - 2;
+    root.style.setProperty('--font-size-base', `${currentFontSize}px`);
 }
 
-/* --- RESET & BASE --- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-size: var(--font-size-base);
-    line-height: 1.6;
-    overflow-x: hidden;
+function toggleContrast() {
+    document.body.classList.toggle('high-contrast');
 }
 
-/* --- LAYOUT (GRID & FLEX) --- */
-header nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 5%;
-    background: rgba(0,0,0,0.8);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+// --- COMPONENTES: ACORDEÃO ---
+function toggleAccordion(index) {
+    const contents = document.querySelectorAll('.accordion-content');
+    contents[index].classList.toggle('active');
 }
 
-.grid-layout {
-    display: grid;
-    gap: var(--gap);
-    padding: 2rem 5%;
-    /* Altere aqui o número de colunas para Desktop */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+// --- COMPONENTES: CARROSSEL ---
+let currentSlide = 0;
+function moveCarousel(direction) {
+    const track = document.getElementById('carousel-track');
+    const slides = d4cDetails.length;
+    currentSlide = (currentSlide + direction + slides) % slides;
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
 }
 
-section { padding: 4rem 5%; }
+// --- ANIMAÇÃO DE SCROLL (REVEAL) ---
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, { threshold: 0.1 });
 
-/* --- COMPONENTES --- */
-.card {
-    background: var(--surface);
-    padding: 1.5rem;
-    border-radius: var(--radius);
-    border-bottom: 4px solid var(--primary);
-    transition: var(--transition);
-}
-
-.card:hover { transform: translateY(-10px); }
-
-/* Acordeão D4C */
-.accordion-item {
-    background: var(--surface);
-    margin-bottom: 0.5rem;
-    border-radius: var(--radius);
-    overflow: hidden;
-}
-
-.accordion-header {
-    width: 100%;
-    padding: 1rem;
-    background: var(--primary);
-    color: white;
-    border: none;
-    text-align: left;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.accordion-content {
-    max-height: 0;
-    padding: 0 1rem;
-    transition: var(--transition);
-    background: var(--surface);
-}
-
-.accordion-content.active {
-    max-height: 200px;
-    padding: 1rem;
-}
-
-/* Carrossel */
-.carousel { position: relative; overflow: hidden; width: 100%; }
-.carousel-track { display: flex; transition: transform 0.5s ease-in-out; }
-.carousel-item { min-width: 100%; padding: 2rem; text-align: center; }
-
-/* --- ANIMAÇÕES (SCROLL REVEAL) --- */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
-}
-
-.reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
+// --- INICIALIZAÇÃO ---
+document.addEventListener('DOMContentLoaded', () => {
+    renderContent();
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    
+    // Listeners do Carrossel
+    document.getElementById('nextBtn').addEventListener('click', () => moveCarousel(1));
+    document.getElementById('prevBtn').addEventListener('click', () => moveCarousel(-1));
+});
